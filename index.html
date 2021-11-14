@@ -4,21 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <script src="script.js" defer></script> 
     <title>Document</title>
 </head>
 <body>
+
+    <div id="container">
+        <button id="buttonRpc">rock</button>
+        <button id="buttonRpc">paper</button>
+        <button id="buttonRpc">scissors</button>
+    </div>
     
     
     <div>
         <form>
-            <strong>Your choice:</strong>
+            <strong>Player:</strong>
             <output type="text" id="user-choice"></output>
         </form>
     </div>
+
     <div>  
         <form>
-            <strong>Computer choice:</strong> 
+            <strong>Computer:</strong> 
             <output type="text" id="computer-choice"></output>
         </form>
     </div>
@@ -26,13 +33,13 @@
     <div>  
         <form>
            <strong>Result of this round:</strong> 
-            <output type="text" id="game-result"></output>
+            <output type="text" id="round-result"></output>
         </form>
     </div>
 
     <div>  
         <form>
-            <strong>User score:</strong> 
+            <strong>Player score:</strong> 
             <output type="number" id="user-score"></output>
         </form>
     </div>
@@ -45,15 +52,17 @@
     </div>
 
     <div>  
-        <form>
+        <form id="endRes">
             <strong>Game result:</strong>
             <output type="text" id="final-result"></output>
+            <div>
+                <button id="restart">Restart</button>
+            </div>
         </form>
     </div>
     
-    <script src="script.js"></script>
-
-    
+   
+       
     
 </body>
 </html>

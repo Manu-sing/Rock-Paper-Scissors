@@ -1,140 +1,157 @@
+const userChoice = document.getElementById("user-choice");
+const computerChoice = document.getElementById("computer-choice");
+const roundResult = document.getElementById("round-result");
+const buttons = document.querySelectorAll('#buttonRpc');
+const playerScore = document.getElementById('user-score');
+const pcScore = document.getElementById('computer-score');
+const finRes = document.getElementById('final-result');
+const endRes = document.getElementById('endRes');
+const restart = document.querySelector('#restart');
 
 
-const forma = document.querySelector('form');
-const out0 = document.getElementById('user-choice');
-const out1 = document.getElementById('computer-choice');
-const out2 = document.getElementById('game-result');
-const out3 = document.getElementById('user-score');
-const out4 = document.getElementById('computer-score');
-const out5 = document.getElementById('final-result');
 
 
-// get a ramdom choice between Rock-paper-scissor from Computer
 
-let choices = ['rock', 'paper', 'scissors'];
+
+let randomValue = function computerPlay() {
+    let choices = ['rock', 'paper', 'scissors'];
+    let randomChoice = choices[Math.floor(Math.random() * choices.length)];
+    return (randomChoice);
+    
+}
+
+
+
+buttons.forEach((button) => {
+
+    // and for each one we add a 'click' listener
+    button.addEventListener('click', playRound);
+  });
+
+
+let userSelection = "default";
 let userScore = 0;
 let computerScore = 0;
 
-let randomValue = function computerPlay() {
-    let randomChoice = choices[Math.floor(Math.random() * choices.length)];
-    out1.textContent = randomChoice;
-    return randomChoice;
+
+            
+function playRound(event) {
+            
+    userSelection = event.target.innerText;
+    let computerSelection = randomValue();
+                
+    if(userScore == 5) {
+            checkWin();
+                      
+                
+    } else if (computerScore == 5) {
+            checkWin();
+                    
+    } else if(userSelection == computerSelection) {
+            roundResult.textContent = "It's a tie, play again.";
+                
+    } else if  (userSelection == 'rock' && computerSelection == 'paper') {
+            roundResult.textContent = "You lost the round.";
+            computerScore++;
+            pcScore.textContent = computerScore;
+    
+                
+    } else if (userSelection == 'rock' && computerSelection == 'scissors') {
+            roundResult.textContent = "You won the round!";
+            userScore++;
+            playerScore.textContent = userScore;
+            
+    } else if (userSelection == 'paper' && computerSelection == 'rock') {
+            roundResult.textContent = "You won the round!";
+            userScore++;
+            playerScore.textContent = userScore;
+                
+    } else if (userSelection == 'paper' && computerSelection == 'scissors') {
+            roundResult.textContent = "You lost the round.";
+            computerScore++;
+            pcScore.textContent = computerScore;
+                
+    } else if (userSelection == 'scissors' && computerSelection == 'rock') {
+            roundResult.textContent = "You lost the round.";
+            computerScore++;
+            pcScore.textContent = computerScore;
+                
+    } else if (userSelection == 'scissors' && computerSelection == 'paper') {
+                    
+            roundResult.textContent = "You won the round!";
+            userScore++;
+            playerScore.textContent = userScore;
+                
+    }
+
+            userChoice.textContent = userSelection;
+            computerChoice.textContent = computerSelection;
+}
+
+
+function gameStart() {
+    playerScore = 0;
+    computerScore = 0;
+    // I'm not sure why this disables and unables the buttons. What does it have to do with the 
+    // variable radonmChoice that stores the result of the random extraction form the randomValue()?
+    buttons.forEach(randomChoice => {
+        randomChoice.disabled = false;
+    });
+    userChoice.textContent = "";
+    computerChoice.textContent = "";
+    roundResult.textContent = "";
+    endRes.textContent = "";
+}
+
+
+
+function gameEnd() {
+    buttons.forEach(randomChoice => {
+        randomChoice.disabled = true;
+    });
+}
+
+
+
+
+
+
+function checkWin() {
+    if (userScore == 5) {
+        finRes.textContent = "You won the game :)";
+        gameEnd();
+    } else if (computerScore == 5) {
+        finRes.textContent = "You lost the game :("
+        gameEnd();
+
+}
+
 };
 
 
 
-async function game() {
-    // iterate the function playRound 5 times with a for loop
-    for (let i = 0; i < 5; i++) {
-        // prompt an initial message "Rock, paper, scissor" to ask the user to input one of the 3
-        let sign = prompt("Rock, paper or scissors?");
-
-        // use a function to compare the random choice from computer with what the user has input in the prompt and return a result
-        function playRound(playerSelection, computerSelection) {
-            if (playerSelection == "rock" && computerSelection == choices[0]) {
-                i = i - 1;
-                return "It's a tie! Play again!";
 
 
-            } else if (playerSelection == "rock" && computerSelection == choices[1]) {
 
-                computerScore = computerScore + 1;
-                out4.textContent = computerScore;
-                // this is when the computer wins
-                if (computerScore == 3) {
-                    i = 5; // so that it practically breaks out of the loop
-                    out5.textContent = "Unfortunately you lost the game :("
-                } else return "You lose this round! Paper beats rock.";
 
-            } else if (playerSelection == "rock" && computerSelection == choices[2]) {
 
-                userScore = userScore + 1;
-                out3.textContent = userScore;
-                if (userScore == 3) {
-                    i = 5;
-                    out5.textContent = "Congratulations, you won the game!"
-                } else return "You win this round! Rock beats scissors.";
 
-            } else if (playerSelection == "paper" && computerSelection == choices[0]) {
 
-                userScore = userScore + 1;
-                out3.textContent = userScore;
-                if (userScore == 3) {
-                    i = 5;
-                    out5.textContent = "Congratulations, you won the game!"
-                } else return "You win this round! Paper beats rock.";
 
-            } else if (playerSelection == "paper" && computerSelection == choices[1]) {
-                i = i - 1;
-                return "It's a tie! Play again!";
 
-            } else if (playerSelection == "paper" && computerSelection == choices[2]) {
 
-                computerScore = computerScore + 1;
-                out4.textContent = computerScore;
-                if (computerScore == 3) {
-                    i = 5;
-                    out5.textContent = "Unfortunately you lost the game :("
-                } else return "You lose this round! Scissors beat paper.";
 
-            } else if (playerSelection == "scissors" && computerSelection == choices[0]) {
 
-                computerScore = computerScore + 1;
-                out4.textContent = computerScore;
-                if (computerScore == 3) {
-                    i = 5;
-                    out5.textContent = "Unfortunately you lost the game :("
-                } else return "You lose this round! Rock beats scissors.";
 
-            } else if (playerSelection == "scissors" && computerSelection == choices[1]) {
 
-                userScore = userScore + 1;
-                out3.textContent = userScore;
-                if (userScore == 3) {
-                    i = 5;
-                    out5.textContent = "Congratulations, you won the game!"
-                } else return "You win this round! Scissors beat paper.";
 
-            } else if (playerSelection == "scissors" && computerSelection == choices[2]) {
-                i = i - 1;
-                return "It's a tie! Play again!";
-                // this currently doesn't work as it tries to convert the playerSelection toLowerCase, as requested in the let playerSelection = sign.toLowerCase(), but it cannot because the sign is null and so it returns an error that sign is null
-            } else if (playerSelection === '' || playerSelection === null) {
-                i = 0;
 
-                /* if (!sign) {
-                    i -= 1;
-                    continue;
-                  }*/
 
-            } else {
-                i = i - 1;
-                return "I think you forgot how to play this game!";
-            }
-        }
 
-        // store the playerSelection argument value (equal to user input made lower case) in a variable
-        let playerSelection = sign.toLowerCase();
-        // store the computerSelection argument value (equal to radom choice determined by function randomValue) in a variable
-        let computerSelection = randomValue();
 
-        // print the user input made to lower case in the paragraph tag
-        out0.textContent = sign;
-        // print the return statement from the function in the out2 tag
-        out2.textContent = playRound(playerSelection, computerSelection);
 
-        await promisifiedRequestAnimationFrame();
-    }
-}
 
-function promisifiedRequestAnimationFrame() {
-    return new Promise((resolve, reject) => {
-        window.requestAnimationFrame(() => {resolve()});
-    })
-}
 
-// run the function
-game();
                 
         
         
@@ -159,4 +176,4 @@ game();
 
         
 
-        
+    
